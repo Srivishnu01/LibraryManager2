@@ -1,0 +1,696 @@
+<!DOCTYPE html>
+<html lang="">
+
+<head>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <style>
+        * {
+            box-sizing: border-box;
+        }
+
+        .column {
+            float: left;
+            padding: 10px;
+            height: 1000px;
+        }
+
+        .left {
+            width: 25%;
+        }
+
+        .right {
+            width: 75%;
+        }
+
+        .row:after {
+            content: "";
+            display: table;
+            clear: both;
+        }
+
+        body {
+            font-family: Arial, Helvetica, sans-serif;
+        }
+
+        * {
+            box-sizing: border-box;
+        }
+
+        input[type=text],
+        input[type=password],
+        input[type=number],
+        select {
+            width: 100%;
+            padding: 15px;
+            margin: 5px 0 22px 0;
+            display: inline-block;
+            border: none;
+            font-size: large;
+            background: #f1f1f1;
+        }
+
+        input[type=text],
+        input[type=password],
+        input[type=number],
+        select {
+            background-color: #ddd;
+            outline: none;
+        }
+        button {
+            background-color: #4CAF50;
+            color: white;
+            font-size: large;
+            padding: 14px 20px;
+            margin: 8px 0;
+            border: none;
+            cursor: pointer;
+            width: 100%;
+            opacity: 0.9;
+        }
+
+        button:hover {
+            opacity: 1;
+        }
+        .cancelbtn {
+            padding: 14px 20px;
+            background-color: #f44336;
+        }
+
+        .signnavbtn {
+            padding: 14px 20px;
+            background-color: #110ecc;
+        }
+        .cancelbtn,
+        .signupbtn {
+            float: left;
+            width: 50%;
+        }
+
+        .container {
+            padding: 16px;
+            margin-left: auto;
+            margin-right: auto;
+        }
+
+        .modal-content {
+            background-color: #fefefe;
+            margin: 1% auto 1% auto;
+            border: 2px solid #888;
+            width: 600px;
+            padding: 0px 40px 0px 40px;
+        }
+        table,th,tr,td{
+            padding: 20px 30px 10px;
+        }
+        hr {
+            border: 1px solid #f1f1f1;
+            margin-bottom: 25px;
+        }
+
+        .clearfix{
+            margin: 1% auto 1% auto;
+        }
+        .clearfix::after {
+            content: "";
+            clear: both;
+            display: table;
+        }
+
+        @media screen and (max-width: 300px) {
+            .cancelbtn,
+            .signupbtn {
+                width: 100%;
+            }
+        }
+
+        .sidenav {
+            height: 100%;
+            width: 0;
+            position: fixed;
+            z-index: 1;
+            top: 0;
+            left: 0;
+            background-color: #111;
+            overflow-x: hidden;
+            transition: 0.5s;
+            padding-top: 60px;
+        }
+
+        .sidenav a {
+            padding: 8px 8px 8px 32px;
+            text-decoration: none;
+            font-size: 25px;
+            color: #818181;
+            display: block;
+            transition: 0.3s;
+        }
+
+        .sidenav a:hover {
+            color: #f1f1f1;
+        }
+
+        .sidenav .closebtn {
+            position: absolute;
+            top: 0;
+            right: 25px;
+            font-size: 36px;
+            margin-left: 50px;
+        }
+
+        @media screen and (max-height: 450px) {
+            .sidenav {
+                padding-top: 15px;
+            }
+            .sidenav a {
+                font-size: 18px;
+            }
+        }
+    </style>
+    <title></title>
+</head>
+
+<body style="background-image: url('img_lib.jpg');
+  height: 100%;
+  background-position: center;
+  background-repeat: no-repeat;
+  background-size: cover;">
+<h1>
+    <span style="font-size:30px;background:#dddddd;cursor:pointer" onclick="openNav()">&#9776; open</span>
+</h1>
+<div id="mySidenav" class="sidenav"> <a href="javascript:void(0)" class="closebtn" onclick="closeNav()">&times;</a>
+    <a href="javascript:welcomein('login');">Login</a>
+    <a href="javascript:welcomein('signup');">Signup</a>
+    <a href="javascript:welcomein('filter');">Filter</a>
+    <!--    <a href="javascript:about();">Search/Pick</a>-->
+    <a href="javascript:filter()">Reserve</a>
+    <a href="javascript:dashboard();">My dashboard</a>
+    <a href="javascript:checkIn();">Check in</a>
+    <a href="javascript:logout();">Log out</a> </div>
+<div class="modal-content" style="text-align: center; background-color: #f1f1f1" id="welcome">
+    <div style="text-align: center;">
+        <h1>Library Management Server</h1></div>
+    <h2>Hi,</h2> <h1 style="color: #f44336" id="username">reader</h1>
+        <h2>Welcome to Salem library system. If already have an account or want to log into using different account, please
+        <a href="javascript:welcomein('login')">login</a> to access, or
+        <a href="javascript:welcomein('signup')">signup</a> to create new user profile
+        and you can use(open) the left panel to <a href="javascript:openNav();">access</a> the library management system.
+
+        <p id="1">
+        </p>
+    </h2> </div>
+<div class="container" id="login" style="display: none;">
+    <form class="modal-content" >
+
+        <h1>Login as existing user</h1>
+        <p>Please fill in this form to login into your account.</p>
+        <hr>
+        <label><b>AadhaarNo</b></label>
+        <input type="number" placeholder="Enter Aadhaar Number" id="aadhaarNo1" required>
+        <label><b>Password</b></label>
+        <input type="password" placeholder="Enter Password" id="psw1" required>
+        <div class="clearfix">
+            <button type="button" onclick="welcomein('welcome')" class="cancelbtn">Cancel</button>
+            <button type="button" class="signupbtn" onclick="login()">Login</button>
+        </div>
+        <p>Don't have an account, SignUp instead</p>
+        <button type="button" class="signnavbtn" onclick="welcomein('signup');">Create a new user</button>
+
+    </form>
+</div>
+<div class="container" id="filter" style="display: none;">
+    <form class="modal-content" >
+
+        <h1>Filter as existing user</h1>
+        <h2>Please apply the filters to search a book.</h2>
+        <h3>You can leave an entity empty to select ALL</h3>
+        <hr>
+        <label><b>Author contains</b></label>
+        <input type="text" placeholder="Enter a part of author name to search" id="searchAuthor" >
+        <label><b>Title contains</b></label>
+        <input type="text" placeholder="Enter a part of Book title to search" id="searchTitle" >
+        <label><b>Domain contains</b></label>
+        <input type="text" placeholder="Enter a part of domain to which the book belongs to" id="searchDomain" >
+        <label><b>Sort by (column)</b></label>
+        <select id="sortBy">
+            <option value="ISBN">ISBN</option>
+            <option value="Author">Author</option>
+            <option value="Title">Title</option>
+            <option value="Domain">Domain</option>
+        </select>
+        <div class="clearfix">
+            <button type="button" onclick="welcomein('welcome')" class="cancelbtn">Cancel</button>
+            <button type="button" class="signupbtn" onclick="filter()">Search</button>
+        </div>
+    </form>
+</div>
+<div class="container" id="search" style="width: fit-content;background-color: #fddeed;display: none";>
+    <div style="text-align: center;">
+        <h1>Available books in Library to reserve</h1>
+    </div>
+    <table id="table1" class="container" style="text-align: left; background-color: #fefefe">
+
+    </table>
+    <div  id="rangecount" style="text-align: center; font-size: large; color: darkslategrey">
+            please select within your range of 1 to 5
+    </div>
+    <div class="clearfix" style="width: 600px">
+        <button type="button" onclick="welcomein('filter')" class="cancelbtn">Back to filter</button>
+        <button type="button" class="signupbtn" onclick="reserve()">Reserve</button>
+    </div>
+</div>
+<div class="container" id="myDashboard" style="width: fit-content;background-color: #eddffd;display: none";>
+    <div style="text-align: center;">
+        <h1>MY DASHBOARD</h1>
+    </div>
+    <h2><b>Reserved books</b></h2>
+    <h4>you can select to cancel the books reservation..</h4>
+    <table id="table2" class="container" style="text-align: left; background-color: #fafefc">
+
+    </table>
+    <div class="clearfix" style="width: 600px">
+        <button type="button" onclick="welcomein('welcome')" class="cancelbtn">Close</button>
+        <button type="button" class="signupbtn" onclick="unreserve()">Unreserve(Cancel)</button>
+    </div>
+    <h2><b>In-Hand books</b></h2>
+    <table id="table3" class="container" style="text-align: left; background-color: #faf3f9">
+
+    </table>
+
+    <h2><b>Returned books</b></h2>
+    <table id="table4" class="container" style="text-align: left; background-color: #f8f4f5">
+
+    </table>
+
+</div>
+<div class="container" id="checkin" style="width: fit-content;background-color: #eddffd;display: none";>
+    <div style="text-align: center;">
+        <h1>Library Check In</h1>
+    </div>
+    <h2><b>Reserved books</b></h2>
+    <h4>you can select to take the books to hand-in</h4>
+    <table id="table5" class="container" style="text-align: left; background-color: #fafefc">
+
+    </table>
+    <div class="clearfix" style="width: 600px">
+        <button type="button" onclick="welcomein('welcome')" class="cancelbtn">Close</button>
+        <button type="button" class="signupbtn" onclick="takeHand()">In-hand Take</button>
+    </div>
+    <h2><b>In-Hand books</b></h2>
+    <h4>you can select to return the hand-in books</h4>
+    <table id="table6" class="container" style="text-align: left; background-color: #faf3f9">
+
+    </table>
+    <div class="clearfix" style="width: 600px">
+        <button type="button" onclick="welcomein('welcome')" class="cancelbtn">Close</button>
+        <button type="button" class="signupbtn" onclick="returnBooks()">Return books</button>
+    </div>
+
+
+</div>
+
+<div class="container"  id="signup" style="display: none;">
+    <form class="modal-content">
+
+        <h1>Sign Up as a new user</h1>
+        <p>Please fill in this form to create an account.</p>
+        <hr>
+        <label><b>AadhaarNo</b></label>
+        <input type="number" placeholder="Enter your Aadhaar Number" id="aadhaarNo" required>
+        <label for="Name"><b>Name</b></label>
+        <input type="text" placeholder="Enter your Name" id="Name" required>
+        <label for="gender"><b>Gender</b></label>
+        <select id="gender">
+            <option value="male">male</option>
+            <option value="female">female</option>
+            <option value="others">others</option>
+        </select>
+        <br/>
+        <label><b>Address</b></label>
+        <input type="text" placeholder="Enter your Address" id="Address" required>
+        <label><b>Occupation</b></label>
+        <input type="text" placeholder="Enter your Occupation" id="Occupation" required>
+        <label for="psw"><b>Set Password</b></label>
+        <input type="password" placeholder="Enter Password" id="psw" id="psw" required>
+        <input type="password" placeholder="Repeat Password" id="psw-repeat" id="psw-repeat" required>
+        <div class="clearfix">
+            <button type="button" onclick="welcomein('login')" class="cancelbtn">Back to login</button>
+            <button type="button" onclick="validateSignup();" class="signupbtn">Sign Up</button>
+        </div>
+
+    </form>  </div>
+<script>
+    let OnItem='welcome';
+    let remaining=5;
+    function openNav() {
+        document.getElementById("mySidenav").style.width = "250px";
+    }
+
+    function closeNav() {
+        document.getElementById("mySidenav").style.width = "0";
+    }
+
+    function v(s) {
+        try {
+            return document.getElementById(s).value;
+        } catch(e) {
+            console.log(s);
+        }
+    }
+    function welcomein(s)
+    {
+        if(OnItem==s)
+        {
+            return;
+        }
+        document.getElementById(s).style.display='block';
+        document.getElementById(OnItem).style.display='none';
+        OnItem=s;
+    }
+    function login() {
+        let xhttp = new XMLHttpRequest();
+        let req = {};
+        for (const e of ['aadhaarNo1', 'psw1']) {
+            req[e] = v(e);
+        }
+        xhttp.onreadystatechange = function() {
+            if(this.readyState == 4)
+                if(this.status == 200) {
+                    console.log(this.responseText);
+                    for (const e in req) {
+                        localStorage.setItem(e, v(e));
+                    }
+                    document.getElementById('username').innerText=this.responseText;
+                    localStorage.setItem('username',this.responseText);
+                } else {
+                    console.log("login failed");
+                }
+        };
+
+        xhttp.open("POST", "api/login", true);
+        xhttp.setRequestHeader("Content-type", "application/json");
+        xhttp.send(JSON.stringify(req));
+    }
+    function searchView() {
+        if(this.readyState == 4)
+            if(this.status == 200) {
+                document.getElementById('table1').innerHTML=`
+        <tr>
+            <th>
+                select
+            </th>
+            <th>
+                ISBN
+            </th>
+            <th>
+                Author
+            </th>
+            <th>
+                Title
+            </th>
+            <th>
+                Domain
+            </th>
+            <th>
+                Available count
+            </th>
+        </tr>
+                    `+this.responseText;
+            }
+    };
+    function dashboard()
+    {
+        welcomein('myDashboard');
+        let xhttp = new XMLHttpRequest();
+        xhttp.onreadystatechange = function (){
+            if(this.readyState == 4)
+                if(this.status == 200) {
+
+                    try {
+                        let {arr}=JSON.parse(this.responseText);
+                        document.getElementById('table2').innerHTML=arr[0];
+                        document.getElementById('table3').innerHTML=arr[1];
+                        document.getElementById('table4').innerHTML=arr[2];
+                    }
+                    catch (e) {
+                        console.log("nope, login failed in dashboard")
+                    }
+                }
+
+        };
+        xhttp.open("GET", "api/book/dashboard/"+localStorage.getItem("aadhaarNo1")+"/?psw="+localStorage.getItem("psw1"), true);
+        xhttp.send();
+
+
+    }
+    function checkIn()
+    {
+        welcomein('checkin');
+        let xhttp = new XMLHttpRequest();
+        xhttp.onreadystatechange = function (){
+            if(this.readyState == 4)
+                if(this.status == 200) {
+
+                    try {
+                        let {arr}=JSON.parse(this.responseText);
+                        document.getElementById('table5').innerHTML=arr[0];
+                        document.getElementById('table6').innerHTML=arr[1];
+                    }
+                    catch (e) {
+                        console.log("nope, login failed in checkin")
+                    }
+                }
+
+        };
+        xhttp.open("GET", "api/book/check-in/"+localStorage.getItem("aadhaarNo1")+"/?psw="+localStorage.getItem("psw1"), true);
+        xhttp.send();
+
+
+    }
+    function returnBooks()
+    {
+
+        let checkBoxes=document.getElementById('table6').querySelectorAll('input[type=checkbox]:checked');
+        if(checkBoxes.length==0)
+        {
+            return;
+        }
+        let checkedValues=[];
+        for (const checkBox of checkBoxes) {
+            checkedValues.push(parseInt(checkBox.value));
+        }
+        let req={
+            'arrayOfISBN':checkedValues
+        }
+        for (const e of ['aadhaarNo1', 'psw1']) {
+            req[e] = localStorage.getItem(e);
+        }
+        let xhttp = new XMLHttpRequest();
+        xhttp.onreadystatechange = function() {
+            if(this.readyState == 4 && this.status == 200) {
+                console.log(this.responseText);
+                checkIn();
+            }
+        };;
+        xhttp.open("POST", "api/book/return", true);
+        xhttp.setRequestHeader("Content-type", "application/json");
+        xhttp.send(JSON.stringify(req));
+
+
+
+
+    }
+    function unreserve()
+    {
+        let checkBoxes=document.getElementById('table2').querySelectorAll('input[type=checkbox]:checked');
+        if(checkBoxes.length==0)
+        {
+            return;
+        }
+        let checkedValues=[];
+        for (const checkBox of checkBoxes) {
+            checkedValues.push(parseInt(checkBox.value));
+        }
+        let req={
+            'arrayOfISBN':checkedValues
+        }
+        for (const e of ['aadhaarNo1', 'psw1']) {
+            req[e] = localStorage.getItem(e);
+        }
+        let xhttp = new XMLHttpRequest();
+        xhttp.onreadystatechange = function() {
+            if(this.readyState == 4 && this.status == 200) {
+                console.log(this.responseText);
+                dashboard();
+            }
+        };;
+        xhttp.open("DELETE", "api/book/reserve", true);
+        xhttp.setRequestHeader("Content-type", "application/json");
+        xhttp.send(JSON.stringify(req));
+
+
+
+    }
+    function takeHand()
+    {
+
+        let checkBoxes=document.getElementById('table5').querySelectorAll('input[type=checkbox]:checked');
+        if(checkBoxes.length==0)
+        {
+            return;
+        }
+        let checkedValues=[];
+        for (const checkBox of checkBoxes) {
+            checkedValues.push(parseInt(checkBox.value));
+        }
+        let req={
+            'arrayOfISBN':checkedValues
+        }
+        for (const e of ['aadhaarNo1', 'psw1']) {
+            req[e] = localStorage.getItem(e);
+        }
+        let xhttp = new XMLHttpRequest();
+        xhttp.onreadystatechange = function() {
+            if(this.readyState == 4 && this.status == 200) {
+                console.log(this.responseText);
+                checkIn();
+            }
+        };;
+        xhttp.open("POST", "api/book/take", true);
+        xhttp.setRequestHeader("Content-type", "application/json");
+        xhttp.send(JSON.stringify(req));
+
+
+
+    }
+    function filter()
+    {
+        let req={};
+        let conList=['searchAuthor','searchTitle','searchDomain','sortBy'];
+        welcomein('search');
+        for (const string of ['aadhaarNo1', 'psw1']) {
+            req[string]=localStorage.getItem(string);
+        }
+        for (const string of conList) {
+            req[string]=v(string);
+        }
+        console.log(req);
+        let xhttp = new XMLHttpRequest();
+        xhttp.onreadystatechange = searchView;
+        xhttp.open("PUT", "api/book/filter", true);
+        xhttp.setRequestHeader("Content-type", "application/json");
+        xhttp.send(JSON.stringify(req));
+
+        handleHoldRange();
+    }
+    function logout()
+    {
+        welcomein('welcome');
+        localStorage.clear();
+        document.getElementById('username').innerText='reader';
+    }
+    this.onload=function (){
+
+        let uname=localStorage.getItem('username');
+        if(uname!=null)
+            document.getElementById('username').innerText=uname;
+    }
+    function handleHoldRange()
+    {
+        let xhttp = new XMLHttpRequest();
+        xhttp.onreadystatechange = function (){
+            if(this.readyState == 4)
+                if(this.status == 200) {
+
+                    try {
+                        remaining = 5 - parseInt(this.responseText);
+                        let msg;
+                        if(remaining==0)
+                        {
+                            msg="Unable to reserve book, Sorry you have crossed your MAX book limit..please return/cancel your books and then do reserve"
+                        }
+                        else
+                        {
+                            msg="please select number of books within your range of 1 to "+remaining+" to reserve";
+                        }
+                        document.getElementById('rangecount').innerText=msg;
+                    }
+                    catch (e) {
+                        console.log("login failed in hold count")
+                    }
+
+                }
+
+        };
+        xhttp.open("GET", "api/book/hold-count/"+localStorage.getItem("aadhaarNo1")+"/?psw="+localStorage.getItem("psw1"), true);
+        xhttp.send();
+    }
+    function reserve()
+    {
+        let checkBoxes=document.getElementById('table1').querySelectorAll('input[type=checkbox]:checked');
+        if(remaining<checkBoxes.length || checkBoxes.length<1)
+        {
+             document.getElementById('rangecount').animate([
+                 // keyframes
+                 { transform: 'translateX(0px)' },
+                 { transform: 'translateX(8px)' }
+             ], {
+                 // timing options
+                 duration: 40,
+                 iterations: 4
+             });
+             return;
+        }
+        let checkedValues=[];
+        for (const checkBox of checkBoxes) {
+            checkedValues.push(parseInt(checkBox.value));
+        }
+        let req={
+            'arrayOfISBN':checkedValues
+        }
+        for (const e of ['aadhaarNo1', 'psw1']) {
+            req[e] = localStorage.getItem(e);
+        }
+        let xhttp = new XMLHttpRequest();
+        xhttp.onreadystatechange = function() {
+            if(this.readyState == 4 && this.status == 200) {
+                console.log(this.responseText);
+                filter();
+            }
+        };;
+        xhttp.open("POST", "api/book/reserve", true);
+        xhttp.setRequestHeader("Content-type", "application/json");
+        xhttp.send(JSON.stringify(req));
+
+
+    }
+    function about()
+    {
+
+    }
+    function validateSignup() {
+        let x = document.getElementById("psw-repeat");
+        if(document.getElementById('psw').value != x.value) {
+            x.placeholder = "repeat password correctly";
+            x.value = "";
+            return;
+        } else {
+            let conList = ['aadhaarNo', 'Name', 'gender', 'Address', 'Occupation', 'psw'];
+            let req = {};
+            for(const e of conList) {
+                req[e] = v(e);
+            }
+            let xhttp = new XMLHttpRequest();
+            xhttp.onreadystatechange = function() {
+                if(this.readyState == 4 && this.status == 200) {
+                    console.log(this.responseText);
+                }
+            };
+            xhttp.open("POST", "api/signup", true);
+            xhttp.setRequestHeader("Content-type", "application/json");
+            xhttp.send(JSON.stringify(req));
+        }
+    }
+</script>
+</body>
+
+</html>
